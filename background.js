@@ -2103,6 +2103,13 @@ const SendLater = {
 
   // Allow other extensions to access local preferences
   onMessageExternalListener(message, sender, sendResponse) {
+    // Local fork: upstream answers any installed add-on here, including
+    // setPreferences. Only the Thunderbird MCP add-on is allowed.
+    const allowedSenders = ["thunderbird-mcp@tkasperczyk.dev"];
+    if (!allowedSenders.includes(sender?.id)) {
+      SLTools.warn(`Ignoring external message from <${sender?.id}>.`);
+      return false;
+    }
     switch (message.action) {
       case "getVersion": {
         // Return Promise for the version.
