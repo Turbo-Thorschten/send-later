@@ -2173,6 +2173,9 @@ var SLTools = {
   },
 
   telemetrySend(values) {
+    // Local fork: telemetry is hard-disabled, regardless of stored preferences
+    // or setPreferences calls from other add-ons.
+    return;
     SLTools.debug("telemetrySend", values);
     if (!this.preferences.telemetryEnabled) {
       return;
