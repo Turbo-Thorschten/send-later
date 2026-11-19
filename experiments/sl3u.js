@@ -1,7 +1,4 @@
 // Get various parts of the WebExtension framework that we need.
-var { Utils } = ChromeUtils.importESModule(
-  "resource://services-settings/Utils.sys.mjs",
-);
 var MailServices =
   globalThis.MailServices ||
   ChromeUtils.importESModule("resource:///modules/MailServices.sys.mjs")
@@ -326,7 +323,7 @@ const SendLaterFunctions = {
       );
       SendLaterVars.sendingUnsentMessages = false;
       if (SendLaterVars.needToSendUnsentMessages) {
-        if (Utils.isOffline) {
+        if (Services.io.offline) {
           SendLaterFunctions.warn(
             "Deferring sendUnsentMessages while offline",
           );
@@ -625,7 +622,7 @@ var SL3U = class extends ExtensionCommon.ExtensionAPI {
         },
 
         async queueSendUnsentMessages() {
-          if (Utils.isOffline) {
+          if (Services.io.offline) {
             SendLaterFunctions.debug(
               "SendLaterFunctions.queueSendUnsentMessages " +
                 "Deferring sendUnsentMessages while offline",
