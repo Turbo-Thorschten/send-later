@@ -1096,6 +1096,11 @@ const SendLater = {
 
     try {
       let nextRecurAt = nextRecur.sendAt;
+      // Without a time, parseableDateTimeFormat() below would schedule the
+      // copy for now, and it would be sent again on every loop.
+      if (!nextRecurAt) {
+        throw new Error(nextRecur.error || "No time for next recurrence.");
+      }
       let nextRecurSpec = nextRecur.nextspec;
       let nextRecurArgs = nextRecur.nextargs;
       while (nextRecurAt < new Date()) {
