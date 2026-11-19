@@ -2212,7 +2212,7 @@ const SendLater = {
     }
     let argsHeader = (options.messageFull.headers["x-send-later-args"] ||
       [])[0];
-    let args = argsHeader ? SLTools.parseArgs(msgRecurArgs) : null;
+    let args = argsHeader ? SLTools.parseArgs(argsHeader) : null;
     let sendAt = new Date(sendAtHeader);
     let now = new Date();
     if (now < sendAt) {
